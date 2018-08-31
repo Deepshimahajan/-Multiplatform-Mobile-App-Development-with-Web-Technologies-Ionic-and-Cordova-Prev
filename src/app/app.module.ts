@@ -31,7 +31,6 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     FavoritesPage,
     ReservationPage 
 
-  
   ],
   imports: [
     BrowserModule,
