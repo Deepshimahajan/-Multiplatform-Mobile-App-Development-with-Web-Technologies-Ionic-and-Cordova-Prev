@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController,  ModalController , ViewController, ActionSheetController  } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
-
+import { CommentPage } from '../../pages/comment/comment';
 /**
  * Generated class for the DishdetailPage page.
  *
@@ -20,11 +20,15 @@ export class DishdetailPage {
   avgstars: string;
   numcomments: number;
   favorite: boolean;
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject('BaseURL') private BaseURL,
     private favoriteservice: FavoriteProvider,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController,
+    public viewCtrl: ViewController) {
 
     this.dish = navParams.get('dish');
     this.favorite = favoriteservice.isFavorite(this.dish.id);
@@ -34,6 +38,8 @@ export class DishdetailPage {
     let total = 0;
     this.dish.comments.forEach(comment => total += comment.rating );
     this.avgstars = (total/this.numcomments).toFixed(2);
+
+    
 
   }
 
@@ -49,6 +55,44 @@ export class DishdetailPage {
       position: 'middle',
       duration: 3000}).present();
   }
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Actions',
+      buttons: [
+      
+        {
+          text: 'Add to Favorites',
+          handler: () =>{
+          
+          this.addToFavorites();
+          }
+           
+        },
 
+       {
+        text: 'Add Comment',
+        handler: () =>{
+          
+            let modal = this.modalCtrl.create(CommentPage);
+            modal.present();
+          
+        
+        
+      }
+    },
+     
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+ 
+    actionSheet.present();
+  }
 
+  
 }
