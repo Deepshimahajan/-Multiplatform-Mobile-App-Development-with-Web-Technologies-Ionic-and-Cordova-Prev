@@ -27,7 +27,8 @@
         </ion-item>
 
         <ion-item>
-           <ion-range min="1" max="5" step="1" pin="true" formControlName="rating">
+            <ion-label stacked>Your Rating</ion-label>
+           <ion-range min="1" max="5" step="1" pin="true" snaps="true" formControlName="rating">
             <ion-icon range-left small name="sad"></ion-icon>
             <ion-icon range-right name="happy"></ion-icon>
           </ion-range>
@@ -35,7 +36,7 @@
 
           <ion-item>
               <ion-label floating>Your Comment</ion-label>
-              <ion-textarea formControlName="comment"></ion-textarea>
+              <ion-textarea formControlName="comment"  rows=16></ion-textarea>
            </ion-item>
 
             <button ion-button type="submit" [disabled]="!addComment.valid">Submit</button>

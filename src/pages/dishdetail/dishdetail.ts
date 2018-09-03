@@ -75,9 +75,6 @@ export class DishdetailPage {
           
             let modal = this.modalCtrl.create(CommentPage);
             modal.present();
-          
-        
-        
       }
     },
      

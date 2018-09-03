@@ -27,7 +27,8 @@ export class CommentPage {
       this.addComment = this.formBuilder.group({
         author: ['', Validators.required],
         rating: 5,
-        comment: ['', Validators.required]
+        comment: ['', Validators.required],
+        date:''
       
     });
   }
