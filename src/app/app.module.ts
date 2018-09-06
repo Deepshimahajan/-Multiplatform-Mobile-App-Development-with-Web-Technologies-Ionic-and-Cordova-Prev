@@ -23,6 +23,8 @@ import { baseURL } from '../shared/baseurl';
 import { FavoriteProvider } from '../providers/favorite/favorite';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { EmailComposer } from '@ionic-native/email-composer';
     { provide: 'BaseURL', useValue: baseURL },
     FavoriteProvider,
     LocalNotifications,
-    EmailComposer
+    EmailComposer,
+    SocialSharing
   ]
 })
 export class AppModule {}
