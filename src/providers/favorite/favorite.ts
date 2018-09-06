@@ -1,6 +1,7 @@
 import { Http} from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 import { Dish } from '../../shared/dish';
 import { Observable } from 'rxjs/Observable';
 import { DishProvider } from '../dish/dish';
@@ -15,16 +16,24 @@ export class FavoriteProvider {
 
   favorites: Array<any>;
 
-  constructor(public http: Http, private dishservice: DishProvider) {
+  constructor(public http: Http, private dishservice: DishProvider,
+    private storage: Storage) {
     console.log('Hello FavoriteProvider Provider');
     this.favorites = [];
+    this.storage.get('favorites').then(
+      favorites => {
+        if(favorites){
+          this.favorites = favorites;
+        }
+      });
   }
 
   addFavorite(id: number): boolean {
     if (!this.isFavorite(id))
       this.favorites.push(id);
-    console.log('favorites', this.favorites);
-    return true;
+      this.storage.set('favorites', this.favorites);
+      console.log('favorites', this.favorites);
+      return true;
   }
   isFavorite(id: number): boolean {
         return this.favorites.some(el => el === id);
@@ -39,6 +48,11 @@ export class FavoriteProvider {
     let index = this.favorites.indexOf(id);
     if (index >= 0) {
       this.favorites.splice(index,1);
+      if(this.favorites.length>0) {
+        this.storage.set('favorites', this.favorites);
+      } else {
+        this.storage.remove('favorites');
+      }
       return this.getFavorites();
     }
     else {
